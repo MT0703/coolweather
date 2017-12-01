@@ -2,6 +2,7 @@ package com.example.coolweather;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ import okhttp3.Response;
 
 public class ChooseAreaFragment extends Fragment {
 
-    private static final String TAG = "ChooseAreaFragment";
     public static final int LEVEL_PROVINCE = 0;
 
     public static final int LEVEL_CITY = 1;
@@ -85,6 +85,8 @@ public class ChooseAreaFragment extends Fragment {
      */
     private int currentLevel;
 
+    private static final String TAG = "MT001";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,6 +110,14 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                }else if(currentLevel == LEVEL_COUNTY){
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    Log.d(TAG, "Enter LEVEL_COUNTY and startActivity ");
+                    startActivity(intent);
+                    Log.d(TAG, "LEVEL_COUNTY and startActivity ");
+                    getActivity().finish();
                 }
             }
         });
